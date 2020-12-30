@@ -10,8 +10,6 @@ import statsmodels.api as sm
 import plotly_express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
-from datetime import datetime
-import matplotlib.pyplot as plt
 import streamlit as st
 
 st.write("""
