@@ -36,4 +36,4 @@ df_fact['day'] = df_fact.index.day
 df_fact['quarter'] = df_fact.index.quarter
 
 sutures = df_fact[df_fact['codigo'].str.startswith('SN')]
-sutures.head()
+#sutures.head()
