@@ -23,7 +23,7 @@ st.write("""
 """)
 
 
-pickle_in = open("Y://Surgim/Surgim_Data_Analysis/facturas.pickle","rb")
+pickle_in = open("facturas.pickle","rb")
 df_fact = pickle.load(pickle_in)
 df_fact['fecha'] = df_fact['fecha'].apply(lambda x: x[0:2]+'-'+x[3:5]+'-'+x[-4:])
 df_fact['fecha']=pd.to_datetime(df_fact['fecha'], format='%d-%m-%Y')
