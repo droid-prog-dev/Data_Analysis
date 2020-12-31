@@ -60,7 +60,7 @@ f = sutures.groupby(["month","year"])["cantidad"].sum().unstack()
 fig1 = px.box(data_frame=f,color_discrete_sequence=px.colors.qualitative.Set2)
 st.write(fig1)
 
-plt.figure(figsize=(14, 6))
+#plt.figure(figsize=(14, 6))
 fig2 = make_subplots(rows=1, cols=1)
 f1 = sutures.groupby(["year"])["cantidad"].sum()
 
