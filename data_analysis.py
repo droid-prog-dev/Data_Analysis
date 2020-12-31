@@ -12,19 +12,12 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import streamlit as st
 
-st.title("New app for data analysis")
-st.write("""
-# Data Analysis for Surgimedical
-	""")
+st.title("Data Analysis for data analysis")
 
-st.subheader("Step 1:")
-
-st.write("""
-## Loading data
-""")
+st.subheader("Loading data:")
 
 sutures = pickle.load(open('dfsutures.pkl','rb'))
-sutures
+st.dataframe(sutures)
 #df_fact = pickle.load(open('facturas.pickle','rb'))
 #df_fact['fecha'] = df_fact['fecha'].apply(lambda x: x[0:2]+'-'+x[3:5]+'-'+x[-4:])
 #df_fact['fecha']=pd.to_datetime(df_fact['fecha'], format='%d-%m-%Y')
