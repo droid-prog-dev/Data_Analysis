@@ -38,6 +38,39 @@ df_weekly_sutures = pd.DataFrame(weekly_sutures, columns=['cantidad'])
 monthly_sutures = sutures['cantidad'].resample('M').sum()
 df_monthly_sutures = pd.DataFrame(monthly_sutures, columns=['cantidad'])
 
+
+fig = make_subplots(rows=1, cols=1)
+
+fig.add_trace(go.Scatter(x=df_monthly_sutures.index, y=np.squeeze(df_monthly_sutures.values),
+                    mode='lines+markers',
+                    name='lines+markers'))
+fig.add_trace(go.Bar(x=df_monthly_sutures.index, y=np.squeeze(df_monthly_sutures.values),name='Bar mode'))
+fig.update_layout(height=600, width=900, title_text=f"Total Sutures Monthly Output")
+
+st.write(fig)
+
+st.write("Total Monthly Output")
+
+x = sutures.groupby(["year","month"])["cantidad"].sum()
+df_wide = x.unstack()
+df_wide = df_wide.fillna(value=0)
+st.dataframe(df_wide)
+
+f = sutures.groupby(["month","year"])["cantidad"].sum().unstack()
+fig1 = px.box(data_frame=f,color_discrete_sequence=px.colors.qualitative.Set2)
+st.write(fig1)
+
+plt.figure(figsize=(14, 6))
+fig2 = make_subplots(rows=1, cols=1)
+f1 = sutures.groupby(["year"])["cantidad"].sum()
+
+fig2.add_trace(go.Scatter(x=f1.index, y=np.squeeze(f1.values),
+                    mode='lines+markers',
+                    name='Line values'))
+fig2.add_trace(go.Bar(x=f1.index, y=np.squeeze(f1.values),name='Bar Values'))
+fig2.update_layout(height=600, width=900, title_text=f"Sutures Yearly Output")
+st.write(fig2)
+
 lista_prod = np.unique(sutures['codigo'].loc[(sutures['codigo'].str[:2]=='SN') & (sutures['codigo'].str[-1:]!='U')])
 st.sidebar.header("Suture Codes:")
 option = st.sidebar.selectbox("Code",lista_prod)
@@ -51,23 +84,26 @@ product_weekly = pd.DataFrame(product_weekly, columns=['cantidad'])
 product_monthly = product['cantidad'].resample('M').sum()
 product_monthly = pd.DataFrame(product_monthly, columns=['cantidad'])
 
-fig = make_subplots(rows=1, cols=1)
+st.subheader("Product Analysis:")
+fig3 = make_subplots(rows=1, cols=1)
 
-fig.add_trace(go.Scatter(x=df_monthly_sutures.index, y=np.squeeze(df_monthly_sutures.values),
+fig3.add_trace(go.Scatter(x=product_monthly.index, y=np.squeeze(product_monthly.values),
                     mode='lines+markers',
                     name='lines+markers'))
-fig.add_trace(go.Bar(x=df_monthly_sutures.index, y=np.squeeze(df_monthly_sutures.values),name='Bar mode'))
-fig.update_layout(height=600, width=900, title_text=f"Total Sutures Monthly Output")
+fig3.add_trace(go.Bar(x=product_monthly.index, y=np.squeeze(product_monthly.values),name='Bar mode'))
+fig3.update_layout(height=600, width=900, title_text=f"Monthly Output for : {option}")
+st.write(fig3)
 
-st.write(fig)
-
-st.write("Monthly Output for:",option)
-
-x = sutures.groupby(["year","month"])["cantidad"].sum()
+x = product.groupby(["year","month"])["cantidad"].sum()
 df_wide = x.unstack()
 df_wide = df_wide.fillna(value=0)
 st.dataframe(df_wide)
 
-f = sutures.groupby(["month","year"])["cantidad"].sum().unstack()
-fig1 = px.box(data_frame=f,color_discrete_sequence=px.colors.qualitative.Set2)
-st.write(fig1)
+f2 = product.groupby(["month","year"])["cantidad"].sum().unstack()
+fig4 = px.box(data_frame=f2)
+st.write(fig4)
+
+st.subheader("Time Serie components")
+decomposition_monthly = sm.tsa.seasonal_decompose(product_monthly, model='additive')
+fig5 = decomposition_monthly.plot()
+st.write(fig5)
