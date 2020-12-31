@@ -12,9 +12,12 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import streamlit as st
 
+st.title("New app for data analysis")
 st.write("""
 # Data Analysis for Surgimedical
 	""")
+
+st.subheader("Step 1:")
 
 st.write("""
 ## Loading data
