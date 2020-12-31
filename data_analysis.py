@@ -61,3 +61,13 @@ fig.update_layout(height=600, width=900, title_text=f"Total Sutures Monthly Outp
 
 st.write(fig)
 
+st.write("Monthly Output for:",option)
+
+x = sutures.groupby(["year","month"])["cantidad"].sum()
+df_wide = x.unstack()
+df_wide = df_wide.fillna(value=0)
+st.dataframe(df_wide)
+
+f = sutures.groupby(["month","year"])["cantidad"].sum().unstack()
+fig1 = px.box(data_frame=f,color_discrete_sequence=px.colors.qualitative.Set2)
+st.write(fig1)
