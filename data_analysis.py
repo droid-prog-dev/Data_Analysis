@@ -38,20 +38,18 @@ df_weekly_sutures = pd.DataFrame(weekly_sutures, columns=['cantidad'])
 monthly_sutures = sutures['cantidad'].resample('M').sum()
 df_monthly_sutures = pd.DataFrame(monthly_sutures, columns=['cantidad'])
 
+lista_prod = np.unique(sutures['codigo'].loc[(sutures['codigo'].str[:2]=='SN') & (sutures['codigo'].str[-1:]!='U')])
+st.sidebar.header("Suture Codes:")
+option = st.sidebar.selectbox("Code",lista_prod)
+st.write('Product:', option)
 
-product = sutures[sutures['codigo']==p.value]
+product = sutures[sutures['codigo']==option]
 product_daily = product['cantidad'].resample('D').sum()
 product_daily = pd.DataFrame(product_daily, columns=['cantidad'])
 product_weekly = product['cantidad'].resample('W').sum()
 product_weekly = pd.DataFrame(product_weekly, columns=['cantidad'])
 product_monthly = product['cantidad'].resample('M').sum()
 product_monthly = pd.DataFrame(product_monthly, columns=['cantidad'])
-
-
-lista_prod = np.unique(sutures['codigo'].loc[(sutures['codigo'].str[:2]=='SN') & (sutures['codigo'].str[-1:]!='U')])
-st.sidebar.header("Suture Codes:")
-option = st.sidebar.selectbox("Code",lista_prod)
-st.write('Product:', option)
 
 fig = make_subplots(rows=1, cols=1)
 
