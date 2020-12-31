@@ -37,3 +37,8 @@ sutures = pickle.load(open('dfsutures.pkl','rb'))
 
 #sutures = df_fact[df_fact['codigo'].str.startswith('SN')]
 #sutures.head()
+
+lista_prod = np.unique(sutures['codigo'].loc[(sutures['codigo'].str[:2]=='SN') & (sutures['codigo'].str[-1:]!='U')])
+st.sidebar.header("Suture Codes:")
+option = st.sidebar.selectbox("Code",lista_prod)
+st.write('Code selected:', option)
