@@ -17,7 +17,7 @@ st.title("Data Analysis for data analysis")
 st.subheader("Loading data:")
 
 sutures = pickle.load(open('dfsutures.pkl','rb'))
-st.dataframe(sutures)
+#st.dataframe(sutures)
 #df_fact = pickle.load(open('facturas.pickle','rb'))
 #df_fact['fecha'] = df_fact['fecha'].apply(lambda x: x[0:2]+'-'+x[3:5]+'-'+x[-4:])
 #df_fact['fecha']=pd.to_datetime(df_fact['fecha'], format='%d-%m-%Y')
