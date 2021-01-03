@@ -14,8 +14,29 @@ import streamlit as st
 
 st.title("Data Analysis for data analysis")
 
-st.subheader("Loading data:")
+st.subheader("Stock de suturas:")
 
+stock_surgim = pickle.load(open("./data/surgim_stock.pkl","rb"))
+stock_lenova = pickle.load(open("./data/lenova_product.pkl","rb"))
+stock_surgim = stock_surgim[['codigo','producto','stock','costoun']]
+stock_lenova = stock_lenova[['code','stock','costoun']]
+titles = ['codigo','stock','costoun']
+stock_lenova.columns = titles
+
+df_stock = stock_surgim.merge(stock_lenova, how='inner', on='codigo', suffixes=("_s","_l"))
+df_stock['total'] = df_stock['stock_s'] + df_stock['stock_l']
+df_stock['S/.'] = df_stock['stock_s']*df_stock['costoun_s'] + df_stock['stock_l']*df_stock['costoun_l']
+
+df_stock_sutures = df_stock.loc[df_stock['codigo'].str.startswith('SN')]
+
+st.dataframe(df_stock)
+st.write(f"Total stock value S/.{round(np.sum(df_stock['S/.']),2)}")
+
+st.dataframe(df_stock_sutures)
+st.write(f"Total stock value S/.{round(np.sum(df_stock_sutures['S/.']),2)}")
+
+
+st.subheader("Salida de suturas:")
 sutures = pickle.load(open('./data/dfsutures.pkl','rb'))
 
 daily_sutures = sutures['cantidad'].resample('D').sum()
