@@ -19,8 +19,8 @@ st.subheader("Stock de Productos:")
 stock_surgim = pickle.load(open("./data/surgim_stock.pkl","rb"))
 stock_lenova = pickle.load(open("./data/lenova_product.pkl","rb"))
 stock_surgim = stock_surgim[['codigo','producto','stock','costoun']]
-stock_lenova = stock_lenova[['code','stock','costoun']]
-titles = ['codigo','stock','costoun']
+stock_lenova = stock_lenova[['code','product','stock','costoun']]
+titles = ['codigo','producto','stock','costoun']
 stock_lenova.columns = titles
 
 df_stock = stock_surgim.merge(stock_lenova, how='left', on=['codigo','producto'], suffixes=("_s","_l"))
