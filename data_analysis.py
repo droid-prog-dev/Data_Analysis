@@ -14,7 +14,7 @@ import streamlit as st
 
 st.title("Data Analysis for data analysis")
 
-st.subheader("Stock de suturas:")
+st.subheader("Stock de Productos:")
 
 stock_surgim = pickle.load(open("./data/surgim_stock.pkl","rb"))
 stock_lenova = pickle.load(open("./data/lenova_product.pkl","rb"))
@@ -32,6 +32,8 @@ df_stock_sutures = df_stock.loc[df_stock['codigo'].str.startswith('SN')]
 
 st.dataframe(df_stock)
 st.write(f"Total stock value S/.{round(np.sum(df_stock['S/.']),2)}")
+
+st.subheader("Stock de suturas:")
 
 st.dataframe(df_stock_sutures)
 st.write(f"Total stock value S/.{round(np.sum(df_stock_sutures['S/.']),2)}")
