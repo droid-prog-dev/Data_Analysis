@@ -24,7 +24,7 @@ titles = ['codigo','stock','costoun']
 stock_lenova.columns = titles
 
 df_stock = stock_surgim.merge(stock_lenova, how='outer', on='codigo', suffixes=("_s","_l"))
-df_stock.fillna(0)
+df_stock.fillna(0, inplace=True)
 df_stock['total'] = df_stock['stock_s'] + df_stock['stock_l']
 df_stock['S/.'] = df_stock['stock_s']*df_stock['costoun_s'] + df_stock['stock_l']*df_stock['costoun_l']
 
