@@ -120,16 +120,17 @@ st.write(fig4)
 
 
 df_cliente = pickle.load(open('./data/dfclientes.pkl','rb'))
-lista_cliente = df_cliente['cliente']
+lista_cliente = np.unique(df_cliente['cliente'])
 
 st.sidebar.header("Cliente:")
 option1 = st.sidebar.selectbox("Cliente:",lista_cliente)
 st.write('Cliente:', option1)
 
 st.subheader("Venta x Cliente:")
-vtaxcli = pickle.load(open('./data/dfvtaxcliente.pkl','rb'))
-selection = vtaxcli.loc[vtaxcli['cliente'] == option1]
-st.dataframe(selection)
+if option1:
+	vtaxcli = pickle.load(open('./data/dfvtaxcliente.pkl','rb'))
+	selection = vtaxcli.loc[vtaxcli['cliente'] == option1]
+	st.dataframe(selection)
 
 
 st.markdown("Time Serie components")
