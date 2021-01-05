@@ -127,10 +127,12 @@ option1 = st.sidebar.selectbox("Cliente:",lista_cliente)
 st.write('Cliente:', option1)
 
 st.subheader("Venta x Cliente:")
-if option1:
-	vtaxcli = pickle.load(open('./data/dfvtaxcliente.pkl','rb'))
-	selection = vtaxcli.loc[vtaxcli['cliente'] == option1]
-	st.dataframe(selection)
+
+vtaxcli = pickle.load(open('./data/dfvtaxcliente.pkl','rb'))
+selection = vtaxcli.loc[vtaxcli['cliente'] == option1]
+st.dataframe(selection)
+fig2 = px.box(data_frame=selection,color_discrete_sequence=px.colors.qualitative.Set2)
+st.write(fig2)
 
 
 st.markdown("Time Serie components")
