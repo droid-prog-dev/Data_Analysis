@@ -135,7 +135,7 @@ st.dataframe(selection)
 
 fig2 = make_subplots(rows=1, cols=1)
 
-fig2.add_trace(go.Scatter(x=s.columns[1:], y=np.squeeze(s.iloc[:,1:].values),
+fig2.add_trace(go.Scatter(x=selection.columns[1:], y=np.squeeze(selection.iloc[:,1:].values),
                     mode='lines+markers', name='Ventas S/.'))
 
 st.write(fig2)
