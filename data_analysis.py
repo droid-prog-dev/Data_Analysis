@@ -132,9 +132,13 @@ vtaxcli = pickle.load(open('./data/dfvtaxcliente.pkl','rb'))
 selection = vtaxcli.loc[vtaxcli['cliente'] == option1]
 
 st.dataframe(selection)
-fig2 = px.box(data_frame=selection.iloc[:,1:].values,color_discrete_sequence=px.colors.qualitative.Set2)
-st.write(fig2)
 
+fig2 = make_subplots(rows=1, cols=1)
+
+fig2.add_trace(go.Scatter(x=s.columns[1:], y=np.squeeze(s.iloc[:,1:].values),
+                    mode='lines+markers', name='Ventas S/.'))
+
+st.write(fig2)
 
 st.markdown("Time Serie components")
 decomposition_monthly = sm.tsa.seasonal_decompose(product_monthly, model='additive')
