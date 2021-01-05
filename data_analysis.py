@@ -132,7 +132,7 @@ selection = vtaxcli.loc[vtaxcli['cliente'] == option1]
 st.dataframe(selection)
 
 
-st.subheader("Time Serie components")
+st.markdown("Time Serie components")
 decomposition_monthly = sm.tsa.seasonal_decompose(product_monthly, model='additive')
 fig5 = decomposition_monthly.plot()
 st.write(fig5)
