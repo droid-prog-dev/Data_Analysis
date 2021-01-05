@@ -72,10 +72,11 @@ df_wide = df_wide.fillna(value=0)
 st.dataframe(df_wide)
 
 f = sutures.groupby(["month","year"])["cantidad"].sum().unstack()
-fig1 = px.box(data_frame=f,color_discrete_sequence=px.colors.qualitative.Set2)
+fig1 = px.violin(data_frame=f, box=True, points='all',
+				title='Total Monthly Output by Year' width=600, height=900,
+				color_discrete_sequence=px.colors.qualitative.Set2)
 st.write(fig1)
 
-#plt.figure(figsize=(14, 6))
 fig2 = make_subplots(rows=1, cols=1)
 f1 = sutures.groupby(["year"])["cantidad"].sum()
 
@@ -83,7 +84,7 @@ fig2.add_trace(go.Scatter(x=f1.index, y=np.squeeze(f1.values),
                     mode='lines+markers',
                     name='Line values'))
 fig2.add_trace(go.Bar(x=f1.index, y=np.squeeze(f1.values),name='Bar Values'))
-fig2.update_layout(height=600, width=900, title_text=f"Sutures Yearly Output")
+fig2.update_layout(height=500, width=800, title_text=f"Sutures Yearly Output")
 st.write(fig2)
 
 lista_prod = np.unique(sutures['codigo'].loc[(sutures['codigo'].str[:2]=='SN') & (sutures['codigo'].str[-1:]!='U')])
@@ -115,10 +116,19 @@ df_wide = df_wide.fillna(value=0)
 st.dataframe(df_wide)
 
 f2 = product.groupby(["month","year"])["cantidad"].sum().unstack()
-fig4 = px.box(data_frame=f2)
+fig4 = px.violin(data_frame=f2, box=True, points='all',
+				title='Total Monthly Output by Year' width=600, height=900,
+				color_discrete_sequence=px.colors.qualitative.Set2)
 st.write(fig4)
 
+## Time Series Analysis:
+st.markdown("Time Serie components")
+decomposition_monthly = sm.tsa.seasonal_decompose(product_monthly, model='additive')
+fig5 = decomposition_monthly.plot()
+st.write(fig5)
 
+## Analysis for Clients:
+st.subheader("Venta x Cliente:")
 df_cliente = pickle.load(open('./data/dfclientes.pkl','rb'))
 lista_cliente = np.unique(df_cliente['cliente'])
 
@@ -126,21 +136,15 @@ st.sidebar.header("Cliente:")
 option1 = st.sidebar.selectbox("Cliente:",lista_cliente)
 st.write('Cliente:', option1)
 
-st.subheader("Venta x Cliente:")
-
 vtaxcli = pickle.load(open('./data/dfvtaxcliente.pkl','rb'))
 selection = vtaxcli.loc[vtaxcli['cliente'] == option1]
 
 st.dataframe(selection)
 
-fig2 = make_subplots(rows=1, cols=1)
-
-fig2.add_trace(go.Scatter(x=selection.columns[1:], y=np.squeeze(selection.iloc[:,1:].values),
+fig6 = make_subplots(rows=1, cols=1)
+fig6.add_trace(go.Scatter(x=selection.columns[1:], y=np.squeeze(selection.iloc[:,1:].values),
                     mode='lines+markers', name='Ventas S/.'))
+fig6.add_trace(go.Bar(x=selection.columns[1:], y=np.squeeze(selection.iloc[:,1:].values),name='Bar mode'))
+fig6.update_layout(height=600, width=900, title_text=f"Monthly Sales S/: {selection}")
+st.write(fig6)
 
-st.write(fig2)
-
-st.markdown("Time Serie components")
-decomposition_monthly = sm.tsa.seasonal_decompose(product_monthly, model='additive')
-fig5 = decomposition_monthly.plot()
-st.write(fig5)
