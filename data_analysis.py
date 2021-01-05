@@ -73,7 +73,7 @@ st.dataframe(df_wide)
 
 f = sutures.groupby(["month","year"])["cantidad"].sum().unstack()
 fig1 = px.violin(data_frame=f, box=True, points='all',
-				title='Total Monthly Output by Year' width=600, height=900,
+				title='Total Monthly Output by Year', width=600, height=900,
 				color_discrete_sequence=px.colors.qualitative.Set2)
 st.write(fig1)
 
@@ -117,7 +117,7 @@ st.dataframe(df_wide)
 
 f2 = product.groupby(["month","year"])["cantidad"].sum().unstack()
 fig4 = px.violin(data_frame=f2, box=True, points='all',
-				title='Total Monthly Output by Year' width=600, height=900,
+				title=f'Total Monthly Output for:{option}', width=600, height=900,
 				color_discrete_sequence=px.colors.qualitative.Set2)
 st.write(fig4)
 
