@@ -32,6 +32,7 @@ df_stock['S/.'] = df_stock['S/.'].round(2)
 
 
 df_stock_sutures = df_stock.loc[df_stock['codigo'].str.startswith('SN')]
+df_stock_sutures.sort_values(by=['codigo'], ascending=False, inplace=True)
 
 st.dataframe(df_stock)
 st.write(f"Total stock value S/.{round(np.sum(df_stock['S/.']),2)}")
@@ -116,6 +117,20 @@ st.dataframe(df_wide)
 f2 = product.groupby(["month","year"])["cantidad"].sum().unstack()
 fig4 = px.box(data_frame=f2)
 st.write(fig4)
+
+
+df_cliente = pickle.load(open('./data/dfclientes.pkl','rb'))
+lista_cliente = df_cliente['cliente']
+
+st.sidebar.subheading("Cliente:")
+option1 = st.sidebar.selectbox("Cliente:",lista_cliente)
+st.write('Cliente:', option1)
+
+st.subheader("Venta x Cliente:")
+vtaxcli = pickle.load(open('./data/dfvtaxcliente.pkl','rb'))
+selection = vtaxcli.loc[vtaxcli['cliente'] == option1]
+st.dataframe(selection)
+
 
 st.subheader("Time Serie components")
 decomposition_monthly = sm.tsa.seasonal_decompose(product_monthly, model='additive')
