@@ -122,7 +122,7 @@ st.write(fig4)
 df_cliente = pickle.load(open('./data/dfclientes.pkl','rb'))
 lista_cliente = df_cliente['cliente']
 
-st.sidebar.subheading("Cliente:")
+st.sidebar.header("Cliente:")
 option1 = st.sidebar.selectbox("Cliente:",lista_cliente)
 st.write('Cliente:', option1)
 
