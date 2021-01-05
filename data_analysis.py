@@ -130,8 +130,9 @@ st.subheader("Venta x Cliente:")
 
 vtaxcli = pickle.load(open('./data/dfvtaxcliente.pkl','rb'))
 selection = vtaxcli.loc[vtaxcli['cliente'] == option1]
+data1 = pd.DataFrame(selection)
 st.dataframe(selection)
-fig2 = px.box(data_frame=selection,color_discrete_sequence=px.colors.qualitative.Set2)
+fig2 = px.box(data_frame=data1,color_discrete_sequence=px.colors.qualitative.Set2)
 st.write(fig2)
 
 
