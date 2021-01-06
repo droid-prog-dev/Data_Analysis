@@ -73,8 +73,9 @@ st.dataframe(df_wide)
 
 f = sutures.groupby(["month","year"])["cantidad"].sum().unstack()
 fig1 = px.violin(data_frame=f, box=True, points='all',
-				title='Total Monthly Output by Year', width=800, height=500,
-				color_discrete_sequence=px.colors.qualitative.Set2)
+				title='Total Monthly Output by Year', width=850, height=550,
+				color_discrete_sequence=px.colors.qualitative.Set2,
+				opacity=0.3, meanline_visible=True)
 st.write(fig1)
 
 fig2 = make_subplots(rows=1, cols=1)
@@ -117,8 +118,9 @@ st.dataframe(df_wide)
 
 f2 = product.groupby(["month","year"])["cantidad"].sum().unstack()
 fig4 = px.violin(data_frame=f2, box=True, points='all',
-				title=f'Total Monthly Output for:{option}', width=800, height=500,
-				color_discrete_sequence=px.colors.qualitative.Set2)
+				title=f'Total Monthly Output for:{option}', width=850, height=550,
+				color_discrete_sequence=px.colors.qualitative.Set2,
+				opacity=0.3, meanline_visible=True)
 st.write(fig4)
 
 ## Time Series Analysis:
@@ -145,6 +147,6 @@ fig6 = make_subplots(rows=1, cols=1)
 fig6.add_trace(go.Scatter(x=selection.columns[1:], y=np.squeeze(selection.iloc[:,1:].values),
                     mode='lines+markers', name='Ventas S/.'))
 fig6.add_trace(go.Bar(x=selection.columns[1:], y=np.squeeze(selection.iloc[:,1:].values),name='Bar mode'))
-fig6.update_layout(height=600, width=900, title_text=f"Monthly Sales S/: {selection}")
+fig6.update_layout(height=600, width=900, title_text=f"Monthly Sales S/:")
 st.write(fig6)
 
