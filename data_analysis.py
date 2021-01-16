@@ -12,7 +12,7 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import streamlit as st
 
-st.title("Data Analysis for data analysis")
+st.title("Data Analysis:")
 
 st.subheader("Stock de Productos:")
 
