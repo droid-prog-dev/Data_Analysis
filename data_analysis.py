@@ -44,7 +44,7 @@ st.write(f"Total stock value S/.{round(np.sum(df_stock['S/.']),2)}")
 st.subheader("Stock de suturas:")
 
 st.dataframe(df_stock_sutures)
-st.write(f"Total stock value S/.{round(np.sum(df_stock_sutures['S/.']),2)}")
+st.write(f"Total stock value S/.{round(np.sum(df_stock_sutures['stock'] * df_stock_sutures['costoun']),2)}")
 
 
 st.subheader("Salida de suturas:")
