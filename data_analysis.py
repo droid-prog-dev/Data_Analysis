@@ -38,7 +38,7 @@ df_stock['S/.'] = df_stock['S/.'].round(2)
 #df_stock_sutures = df_stock.loc[df_stock['codigo'].str.startswith('SN')]
 df_stock_sutures = stock_lenova.loc[stock_lenova['codigo'].str.startswith('SN')]
 
-df_stock_sutures.sort_values(by=['codigo'], ascending=False, inplace=True)
+df_stock_sutures.sort_values(by=['codigo'], ascending=True, inplace=True)
 
 st.dataframe(df_stock)
 st.write(f"Total stock value S/.{round(np.sum(df_stock['S/.']),2)}")
