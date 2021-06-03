@@ -18,6 +18,8 @@ st.subheader("Stock de Productos:")
 
 stock_surgim = pickle.load(open("./data/surgim_stock.pkl","rb"))
 stock_lenova = pickle.load(open("./data/lenova_product.pkl","rb"))
+stock_lenova = stock_lenova.loc[stock_lenova['vigencia'].str.startswith('V')]
+
 stock_surgim = stock_surgim[['codigo','producto','stock','costoun']]
 stock_lenova = stock_lenova[['code','product','stock','costoun']]
 titles = ['codigo','producto','stock','costoun']
