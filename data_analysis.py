@@ -23,15 +23,19 @@ stock_lenova = stock_lenova[['code','product','stock','costoun']]
 titles = ['codigo','producto','stock','costoun']
 stock_lenova.columns = titles
 
+#df_stock = stock_lenova
 df_stock = stock_surgim.merge(stock_lenova, how='outer', on=['codigo','producto'], suffixes=("_s","_l"))
 df_stock.fillna(0, inplace=True)
 df_stock.sort_values(by=['producto'], ascending=False, inplace=True)
 df_stock['total'] = df_stock['stock_s'] + df_stock['stock_l']
 df_stock['S/.'] = df_stock['stock_s']*df_stock['costoun_s'] + df_stock['stock_l']*df_stock['costoun_l']
+#df_stock['S/.'] = df_stock['stock']*df_stock['costoun']
 df_stock['S/.'] = df_stock['S/.'].round(2)
 
 
-df_stock_sutures = df_stock.loc[df_stock['codigo'].str.startswith('SN')]
+#df_stock_sutures = df_stock.loc[df_stock['codigo'].str.startswith('SN')]
+df_stock_sutures = stock_lenova.loc[stock_lenova['codigo'].str.startswith('SN')]
+
 df_stock_sutures.sort_values(by=['codigo'], ascending=False, inplace=True)
 
 st.dataframe(df_stock)
