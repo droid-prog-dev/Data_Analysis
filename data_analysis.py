@@ -51,6 +51,13 @@ st.write(f"Total stock value S/.{round(np.sum(df_stock_sutures['stock'] * df_sto
 
 st.subheader("Venta de suturas S/:")
 vtasutures = pickle.load(open('./data/df_lenova_factxprod.pkl','rb'))
+
+format_dict = {'quantity-sum':'{:,.0f}','priceun-mean':'{:,.2f}',
+               'priceun-max':'{:,.2f}',
+               'priceun-min':'{:,.2f}',
+               'costoun-mean':'{:,.2f}', 'total-sum':'{:,.2f}'}
+vtasutures.style.format(format_dict).highlight_max(axis=0)
+
 st.dataframe(vtasutures)
 #fig0 = px.bar(data_frame=vtasutures,
 #				title='Total Suture Sales in S/.', width=850, height=550,
