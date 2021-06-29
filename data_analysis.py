@@ -40,7 +40,7 @@ df_stock_sutures = stock_lenova.loc[stock_lenova['codigo'].str.startswith('SN')]
 
 df_stock_sutures.sort_values(by=['codigo'], ascending=True, inplace=True)
 
-st.dataframe(df_stock, width=1800, height=800)
+st.dataframe(df_stock, width=2000, height=800)
 st.write(f"Total stock value S/.{round(np.sum(df_stock['S/.']),2)}")
 
 st.subheader("Stock de suturas:")
@@ -67,10 +67,10 @@ vtasutures.reset_index(inplace=True)
 st.dataframe(vtasutures.style.highlight_max(axis=0), width=1800, height=800)
 fig0 = make_subplots(rows=2, cols=1)
 
-fig0.add_trace(go.Scatter(x=vtasutures.index, y=np.squeeze(vtasutures['total-sum'].values),
+fig0.add_trace(go.Scatter(x=vtasutures['period'], y=np.squeeze(vtasutures['total-sum'].values),
 				mode='lines+markers',name='Vta-Soles'), row=1, col=1)
 				
-fig0.add_trace(go.Scatter(x=vtasutures.index, y=np.squeeze(vtasutures['priceun-mean'].values),
+fig0.add_trace(go.Scatter(x=vtasutures['period'], y=np.squeeze(vtasutures['priceun-mean'].values),
 				mode='lines+markers',name='AVG - Price'), row=2, col=1)
 
 
