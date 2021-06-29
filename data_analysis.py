@@ -62,18 +62,17 @@ vtasutures['period'] = pd.to_datetime(vtasutures['year'].astype(str)+'-'+vtasutu
 vtasutures.set_index('period', inplace=True)
 
 st.dataframe(vtasutures)
-fig0 = make_subplots(rows=1, cols=1)
+fig0 = make_subplots(rows=2, cols=1)
 
 fig0.add_trace(go.Scatter(x=vtasutures.index, y=np.squeeze(vtasutures['total-sum'].values),
-				mode='lines+markers',
-				name='Vta-Soles'))
+				mode='lines+markers',name='Vta-Soles'), row=1, col=1)
+				
 
 fig0.add_trace(go.Scatter(x=vtasutures.index, y=np.squeeze(vtasutures['priceun-mean'].values),
-				mode='lines+markers',
-				name='AVG - Price'))
+				mode='lines+markers',name='AVG - Price'), row=2, col=1)
 
 
-fig0.update_layout(height=600, width=900, title_text=f"Total Sutures Monthly Sales")
+fig0.update_layout(height=600, width=900, title_text=f"Total Sutures Monthly Sales in Soles")
 st.write(fig0)
 
 
