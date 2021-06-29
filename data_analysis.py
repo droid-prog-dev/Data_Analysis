@@ -67,9 +67,8 @@ st.dataframe(vtasutures.style.highlight_max(axis=0), width=900, height=600)
 fig0 = make_subplots(rows=2, cols=1)
 
 fig0.add_trace(go.Scatter(x=vtasutures.index, y=np.squeeze(vtasutures['total-sum'].values),
-				mode='lines+markers',name='Vta-Soles', titl), row=1, col=1)
+				mode='lines+markers',name='Vta-Soles'), row=1, col=1)
 				
-
 fig0.add_trace(go.Scatter(x=vtasutures.index, y=np.squeeze(vtasutures['priceun-mean'].values),
 				mode='lines+markers',name='AVG - Price'), row=2, col=1)
 
