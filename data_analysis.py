@@ -48,7 +48,7 @@ st.subheader("Stock de suturas:")
 st.dataframe(df_stock_sutures)
 st.write(f"Total stock value S/.{round(np.sum(df_stock_sutures['stock'] * df_stock_sutures['costoun']),2)}")
 
-
+## VENTA DE SUTURAS EN S/.
 st.subheader("Venta de suturas S/:")
 vtasutures = pickle.load(open('./data/df_lenova_factxprod.pkl','rb'))
 
@@ -57,16 +57,19 @@ format_dict = {'quantity-sum':'{:,.0f}','priceun-mean':'{:,.2f}',
                'priceun-min':'{:,.2f}',
                'costoun-mean':'{:,.2f}', 'total-sum':'{:,.2f}'}
 vtasutures.style.format(format_dict).highlight_max(axis=0)
+vtasutures.reset_index(inplace=True)
+vtasutures['period'] = pd.to_datetime(vtasutures['year'].astype(str)+'-'+vtasutures['month'].astype(str))
+vtasutures.set_index('period', inplace=True)
 
 st.dataframe(vtasutures)
-#fig0 = px.bar(data_frame=vtasutures,
-#				title='Total Suture Sales in S/.', width=850, height=550,
-#			color_discrete_sequence=px.colors.qualitative.Plotly)
-fig0 = vtasutures.plot(kind='bar', figsize=(12,8))
+fig0 = make_subplots(rows=1, cols=1)
+fig0 = px.Scatter(data_frame=vtasutures, x=vtasutures.index, y=['total-sum','quantity-sum','priceun-mean']
+				title='Total Suture Sales in S/.', color_discrete_sequence=px.colors.qualitative.Plotly)
+fig0.update_layout(height=600, width=900, title_text=f"Total Sutures Monthly Sales")
 st.write(fig0)
 
 
-st.subheader("Salida de suturas:")
+st.subheader("Salida de suturas - cajasx24und:")
 sutures = pickle.load(open('./data/dfsutures.pkl','rb'))
 
 daily_sutures = sutures['cantidad'].resample('D').sum()
