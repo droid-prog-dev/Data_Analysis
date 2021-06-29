@@ -60,7 +60,7 @@ format_dict = {'quantity-sum':'{:,.0f}','priceun-mean':'{:,.2f}',
 vtasutures.style.format(format_dict).highlight_max(axis=0)
 vtasutures.reset_index(inplace=True)
 vtasutures['period'] = pd.to_datetime(vtasutures['year'].astype(str)+'-'+vtasutures['month'].astype(str), format='%Y-%m')
-vtasutures.drop(['year','month'], inplace=True)
+vtasutures.drop(['year','month'], axis='columns', inplace=True)
 vtasutures.set_index('period', inplace=True)
 
 st.dataframe(vtasutures.style.highlight_max(axis=0), width=900, height=600)
