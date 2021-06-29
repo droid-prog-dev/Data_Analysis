@@ -40,12 +40,12 @@ df_stock_sutures = stock_lenova.loc[stock_lenova['codigo'].str.startswith('SN')]
 
 df_stock_sutures.sort_values(by=['codigo'], ascending=True, inplace=True)
 
-st.dataframe(df_stock)
+st.dataframe(df_stock, width=1200, height=800)
 st.write(f"Total stock value S/.{round(np.sum(df_stock['S/.']),2)}")
 
 st.subheader("Stock de suturas:")
 
-st.dataframe(df_stock_sutures)
+st.dataframe(df_stock_sutures, width=900, height=600)
 st.write(f"Total stock value S/.{round(np.sum(df_stock_sutures['stock'] * df_stock_sutures['costoun']),2)}")
 
 ## VENTA DE SUTURAS EN S/.
@@ -56,16 +56,18 @@ format_dict = {'quantity-sum':'{:,.0f}','priceun-mean':'{:,.2f}',
                'priceun-max':'{:,.2f}',
                'priceun-min':'{:,.2f}',
                'costoun-mean':'{:,.2f}', 'total-sum':'{:,.2f}'}
+
 vtasutures.style.format(format_dict).highlight_max(axis=0)
 vtasutures.reset_index(inplace=True)
-vtasutures['period'] = pd.to_datetime(vtasutures['year'].astype(str)+'-'+vtasutures['month'].astype(str))
+vtasutures['period'] = pd.to_datetime(vtasutures['year'].astype(str)+'-'+vtasutures['month'].astype(str), format='%Y-%m')
+vtasutures.drop(['year','month'], inplace=True)
 vtasutures.set_index('period', inplace=True)
 
-st.dataframe(vtasutures)
+st.dataframe(vtasutures.style.highlight_max(axis=0), width=900, height=600)
 fig0 = make_subplots(rows=2, cols=1)
 
 fig0.add_trace(go.Scatter(x=vtasutures.index, y=np.squeeze(vtasutures['total-sum'].values),
-				mode='lines+markers',name='Vta-Soles'), row=1, col=1)
+				mode='lines+markers',name='Vta-Soles', titl), row=1, col=1)
 				
 
 fig0.add_trace(go.Scatter(x=vtasutures.index, y=np.squeeze(vtasutures['priceun-mean'].values),
