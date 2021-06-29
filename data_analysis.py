@@ -63,8 +63,16 @@ vtasutures.set_index('period', inplace=True)
 
 st.dataframe(vtasutures)
 fig0 = make_subplots(rows=1, cols=1)
-fig0 = px.scatter(data_frame=vtasutures, x=vtasutures.index, y=['total-sum','quantity-sum','priceun-mean']
-				title='Total Suture Sales in S/.', color_discrete_sequence=px.colors.qualitative.Plotly)
+
+fig0.add_trace(go.Scatter(x=vtasutures.index, y=np.squeeze(vtasutures['total-sum'].values),
+				mode='lines+markers',
+				name='Vta-Soles'))
+
+fig0.add_trace(go.Scatter(x=vtasutures.index, y=np.squeeze(vtasutures['priceun-mean'].values),
+				mode='lines+markers',
+				name='AVG - Price'))
+
+
 fig0.update_layout(height=600, width=900, title_text=f"Total Sutures Monthly Sales")
 st.write(fig0)
 
